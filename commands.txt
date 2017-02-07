@@ -1,4 +1,9 @@
-    1  ls
+cpu_t cpu2 = cpu;
+		cpu2.IR = memory[cpu.getOperand()];
+		cpu.PC = cpu2.getOperand();    
+
+
+1  ls
     2  pythobn
     3  python
     4  g++

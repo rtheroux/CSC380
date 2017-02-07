@@ -19,9 +19,9 @@ void fetch(cpu_t &cpu, WORD memory[])
 	
 	// do what fetch should do
 	cpu.IR = memory[cpu.PC];
-	cpu.IR = cpu.getOpcode();
+	//cpu.IR = cpu.getOpcode();
 	//cpu.ACC = cpu.getOperand();
-	cout << " " << cpu.IR << " ";
+	//cout << " " << cpu.IR << " ";
 }
 
 /**
@@ -45,13 +45,13 @@ bool execute(cpu_t &cpu, WORD memory[])
 	}
 	else if(cpu.getOpcode()==0x1) // ADD
 	{
-		
+		cpu.ACC = cpu.ACC + memory[cpu.getOperand()];
 		// return true, because the program is still running
 		return true;
 	}
 	else if(cpu.getOpcode()==0x2) // SUBTRACT
 	{
-				
+		cpu.ACC = cpu.ACC - memory[cpu.getOperand()];		
 		// and return true, because the program is still running
 		return true;
 	}
@@ -63,25 +63,27 @@ bool execute(cpu_t &cpu, WORD memory[])
 	}
 	else if(cpu.getOpcode()==0x4) // STORE
 	{
-				
+		memory[cpu.getOperand()] = cpu.ACC;		
 		// and return true, because the program is still running
 		return true;
 	}
 	else if(cpu.getOpcode()==0x5) // READ
 	{
-				
+		cin >> memory[cpu.getOperand()];
 		// and return true, because the program is still running
 		return true;
 	}
 	else if(cpu.getOpcode()==0x6) // DISPLAY
 	{
-				
+		cout <<"\nThe contents at mem slot " << cpu.getOperand() << " is " << memory[cpu.getOpcode()] << "\n";		
 		// and return true, because the program is still running
 		return true;
 	}
 	else if(cpu.getOpcode()==0x7) // JUMPIF
 	{
-				
+		if (cpu.ACC > 0){
+			cpu.PC = cpu.getOperand();
+		};		
 		// and return true, because the program is still running
 		return true;
 	}
@@ -91,9 +93,10 @@ bool execute(cpu_t &cpu, WORD memory[])
 		// and return true, because the program is still running
 		return true;
 	}
-	else if(cpu.getOpcode()==0x9) // READ
-	{
-				
+	else if(cpu.getOpcode()==0x9) // JUMP
+	{	
+		
+		cpu.PC = cpu.getOperand();
 		// and return true, because the program is still running
 		return true;
 	}
